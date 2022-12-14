@@ -1,0 +1,128 @@
+package GSM_TapTapTap;
+
+import java.text.DecimalFormat;
+
+import javax.swing.JLabel;
+
+public class ShopEvent {
+	double damage;
+	
+	DecimalFormat form = new DecimalFormat("#.##");
+	
+	public void shopEventer() { 
+		Main.buildingButton[0].addActionListener(event -> { 
+			for (int i = 0; i < 4; i++) {
+				Main.buildingButton[i].setVisible(false);
+			}
+			
+			Main.save.setVisible(false);
+			Main.load.setVisible(false);
+			
+			for (int i = 0; i < 3; i++) {
+				Main.buttons[i].setVisible(true);
+			}
+			
+			Main.shop.setVisible(true);
+			Main.shopExit.setVisible(true);
+			
+			Main.tapUpgradeMoney_label.setVisible(true);
+			Main.tapUpgradeDia_label.setVisible(true);
+			Main.autoUpgradeMoney_label.setVisible(true);
+		});
+		
+		Main.shopExit.addActionListener(event->{
+			Main.shop.setVisible(false);
+			Main.shopExit.setVisible(false);
+			
+			Main.tapUpgradeMoney_label.setVisible(false);
+			Main.tapUpgradeDia_label.setVisible(false);
+			Main.autoUpgradeMoney_label.setVisible(false);
+			
+			for (int i = 0; i < 3; i++) {
+				Main.buttons[i].setVisible(false);
+			}
+			
+			Main.save.setVisible(true);
+			Main.load.setVisible(true);
+			for (int i = 0; i < 4; i++) {
+				Main.buildingButton[i].setVisible(true);
+			}
+		});
+		
+		Main.buttons[0].addActionListener(event->{
+			if (Main.money >= Main.tapMoney) {
+				Main.money -= Main.tapMoney;
+				
+				if (Main.tapMoneyLv <= 10) {
+					Main.tapMoney += 150;
+					damage += 5;
+				}
+				else if (Main.tapMoneyLv > 10 && Main.tapMoneyLv <= 100) {
+					Main.tapMoney += (Main.tapMoneyLv / 10) * 150;
+					damage += 10 * (Main.tapMoneyLv / 10);
+				}
+				else {
+					damage += 200 * (Main.tapMoneyLv / 100);
+					Main.tapMoney += (Main.tapMoneyLv / 10) * 500;
+				}
+				
+				Main.damage = (damage + (damage / 10 * (Main.tapDiaLv - 1)));
+						
+				Main.tapMoneyLv++;
+				
+				//Main.tap.setText("tap : " + Change.change(Main.damage)  + "(+" + (Main.tapDiaLv - 1) * 10 + "%)");
+				Main.tap.setText("tap : " + Change.change(Main.damage));
+				Main.moneyL.setText("◇  : " + Change.change(Main.money));
+				Main.tapUpgradeMoney_label.setText("Lv." + Main.tapMoneyLv + " tap 강화(◇) - " + Main.tapMoney);
+				
+			}
+		});
+		
+		Main.buttons[1].addActionListener(event->{
+			if (Main.dia >= Main.tapDia) {
+				Main.dia -= Main.tapDia;
+				
+				Main.damage += damage / 10; 
+				
+				Main.tapDia++;
+				Main.tapDiaLv++;
+				
+				//Main.tap.setText("tap : " + Change.change(Main.damage) + "(+" + (Main.tapDiaLv - 1) * 10 + "%)");
+				Main.tap.setText("tap : " + Change.change(Main.damage));
+				Main.diaL.setText("★  : " + Main.dia);
+				Main.tapUpgradeDia_label.setText("Lv." + Main.tapDiaLv + " tap 강화(★) - " + Main.tapDia);
+				
+			}
+		});
+		
+		Main.buttons[2].addActionListener(event->{
+			if (Main.autoMoneyLv < 18) {
+				if (Main.money >= Main.autoMoney) {
+					Main.money -= Main.autoMoney;
+					
+					Main.autoTapSpeed -= 0.1;
+					
+					if (Main.autoMoneyLv <= 1)
+						Main.autoMoney = 5000;
+					else if (Main.autoMoneyLv > 1 && Main.autoMoneyLv <= 10)
+						Main.autoMoney += 5000 * Main.autoMoneyLv;
+					else if (Main.autoMoneyLv > 10 && Main.autoMoneyLv <= 14)
+						Main.autoMoney += 20000 * Main.autoMoneyLv + Main.autoMoney / 5;
+					else
+						Main.autoMoney += 7 * (Main.autoMoney / 5);
+					
+					Main.autoMoneyLv++;
+					
+					if (Main.autoMoneyLv >= 18) {
+						Main.autoUpgradeMoney_label.setText("Lv.MAX auto 강화(◇) - MAX");
+					}
+					else {
+						Main.autoUpgradeMoney_label.setText("Lv." + Main.autoMoneyLv + " auto 강화(◇) - " + Main.autoMoney);
+					}
+					Main.auto.setText("AUTO : " + form.format(Main.autoTapSpeed));
+					Main.moneyL.setText("◇  : " + Change.change(Main.money));
+				}
+			}
+		});
+	}
+}

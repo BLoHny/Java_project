@@ -1,0 +1,15 @@
+package GSM_TapTapTap;
+
+public class ChangeMoney {
+	public static String change() {
+		int cnt = 0;
+		double money = Main.money;
+		
+		while(money > 0) {
+			money /= 1000;
+			cnt++;
+		}
+		
+		return "";
+	}
+}

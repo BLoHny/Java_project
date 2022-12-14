@@ -1,0 +1,25 @@
+package GSM_TapTapTap;
+
+public class ChangeMoney {
+	public static String change() {
+		int cnt = 0;
+		double money = Main.money;
+		
+		do {
+			money /= 10000;
+			cnt++;
+		}while(money > 0);
+		
+		if (cnt == 1)
+			return "천";
+		else if (cnt == 2) {
+			return "만";
+		}
+		else if (cnt == 2) {
+			return "억";
+		}
+		else {
+			return "조";
+		}
+	}
+}

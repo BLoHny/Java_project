@@ -1,0 +1,144 @@
+package GSM_TapTapTap;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DecimalFormat;
+
+import javax.swing.JLabel;
+
+public class Save {
+	static File file = new File("save.txt");
+	
+	public static void input() throws IOException{
+		Main.save.addActionListener(event->{
+			BufferedWriter bw;
+			try {
+				if (!file.exists())
+					file.createNewFile();
+				
+				bw = new BufferedWriter(new FileWriter(file));
+				bw.write("" + Main.damage);
+				bw.newLine();
+				bw.write("" + Main.money);
+				bw.newLine();
+				bw.write("" + Main.dia);
+				bw.newLine();
+				bw.write("" + Main.autoTapSpeed);
+				bw.newLine();
+				bw.write("" + Main.tapMoney);
+				bw.newLine();
+				bw.write("" + Main.tapDia);
+				bw.newLine();
+				bw.write("" + Main.autoMoney);
+				bw.newLine();
+				bw.write("" + Main.tapMoneyLv);
+				bw.newLine();
+				bw.write("" + Main.tapDiaLv);
+				bw.newLine();
+				bw.write("" + Main.autoMoneyLv);
+				bw.newLine();
+				bw.write("" + Main.job1Check);
+				bw.newLine();
+				bw.write("" + Main.job2Check);
+				bw.newLine();
+				bw.write("" + ShopEvent.damage);
+				bw.newLine();
+				bw.close();
+			}
+			catch(IOException e1) {
+				e1.printStackTrace();
+			}
+		});
+		
+	}
+	
+	static DecimalFormat form = new DecimalFormat("#.##");
+	
+	public static void output() throws IOException{
+		Main.load.addActionListener(event->{
+			try {
+				BufferedReader br = new BufferedReader(new FileReader(file));
+				String line = null;
+				int b = 1;
+				
+				while((line = br.readLine()) != null)
+				{
+					switch(b)
+					{
+					case 1:
+						Main.damage = Double.valueOf(line);
+						break;
+					case 2:
+						Main.money = Double.valueOf(line);
+						break;
+					case 3:
+						Main.dia = Integer.valueOf(line);
+						break;
+					case 4:
+						Main.autoTapSpeed = Double.valueOf(line);
+						break;
+					case 5:
+						Main.tapMoney = Integer.valueOf(line);
+						break;
+					case 6:
+						Main.tapDia = Integer.valueOf(line);
+						break;
+					case 7:
+						Main.autoMoney = Integer.valueOf(line);
+						break;
+					case 8:
+						Main.tapMoneyLv = Integer.valueOf(line);
+						break;
+					case 9:
+						Main.tapDiaLv = Integer.valueOf(line);
+						break;
+					case 10:
+						Main.autoMoneyLv = Integer.valueOf(line);
+						break;
+					case 11:
+						Main.job1Check = Boolean.valueOf(line);
+						break;
+					case 12:
+						Main.job2Check = Boolean.valueOf(line);
+						break;
+					case 13:
+						ShopEvent.damage = Double.valueOf(line);
+						break;
+					}
+					b++;
+				}
+				br.close();
+				
+				
+				Main.tap.setText("tap : " + Change.change(Main.damage)); System.out.println(Main.damage);
+				Main.moneyL.setText("◇  : " + Change.change(Main.money));
+				Main.diaL.setText("★  : " + Main.dia);
+				Main.auto.setText("AUTO : " + form.format(Main.autoTapSpeed));
+				
+				Main.tapUpgradeMoney_label.setText("Lv." + Main.tapMoneyLv + " tap 강화(◇) - " + Main.tapMoney);
+				Main.tapUpgradeDia_label.setText("Lv." + Main.tapDiaLv + " tap 강화(★) - " + Main.tapDia);
+				if (Main.autoMoneyLv >= 18) {
+					Main.autoUpgradeMoney_label.setText("Lv.MAX auto 강화(◇) - MAX");
+				}
+				else {
+					Main.autoUpgradeMoney_label.setText("Lv." + Main.autoMoneyLv + " auto 강화(◇) - " + Main.autoMoney);
+				}
+				
+				if (Main.job1Check == true) {
+					Main.job1.setIcon(JobEvent.buyOk);
+				}
+				
+				if (Main.job2Check == true) {
+					Main.job2.setIcon(JobEvent.buyOk);
+				}
+			}
+			catch(IOException e1) {
+				e1.printStackTrace();
+			}
+		});
+	}
+}

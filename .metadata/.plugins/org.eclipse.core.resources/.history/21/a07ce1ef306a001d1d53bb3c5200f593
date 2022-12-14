@@ -1,0 +1,9 @@
+package GSM_TapTapTap;
+
+public class JobEvent {
+	public void jobEventer() {
+		Main.buildingButton[1].addActionListener(event->{
+			
+		});
+	}
+}

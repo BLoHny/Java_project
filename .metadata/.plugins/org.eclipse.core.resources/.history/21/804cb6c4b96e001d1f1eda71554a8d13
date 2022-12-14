@@ -1,0 +1,108 @@
+package GSM_TapTapTap;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import javax.swing.JLabel;
+
+public class Save {
+	static File file = new File("save.txt");
+	
+	public static void input() throws IOException{
+		Main.save.addActionListener(event->{
+			BufferedWriter bw;
+			try {
+				if (!file.exists())
+					file.createNewFile();
+				
+				bw = new BufferedWriter(new FileWriter(file));
+				bw.write("" + Main.damage);
+				bw.newLine();
+				bw.write("" + Main.money);
+				bw.newLine();
+				bw.write("" + Main.dia);
+				bw.newLine();
+				bw.write("" + Main.autoTapSpeed);
+				bw.newLine();
+				bw.write("" + Main.tapMoney);
+				bw.newLine();
+				bw.write("" + Main.tapDia);
+				bw.newLine();
+				bw.write("" + Main.autoMoney);
+				bw.newLine();
+				bw.write("" + Main.tapMoneyLv);
+				bw.newLine();
+				bw.write("" + Main.tapDiaLv);
+				bw.newLine();
+				bw.write("" + Main.autoMoneyLv);
+				bw.newLine();
+				bw.close();
+			}
+			catch(IOException e1) {
+				e1.printStackTrace();
+			}
+		});
+		
+	}
+	
+	public static void output() throws IOException{
+		Main.load.addActionListener(event->{
+			try {
+				BufferedReader br = new BufferedReader(new FileReader(file));
+				String line = null;
+				int b = 1;
+				
+				while((line = br.readLine()) != null)
+				{
+					switch(b)
+					{
+					case 1:
+						Main.damage = Double.valueOf(line);
+						break;
+					case 2:
+						Main.money = Double.valueOf(line);
+						break;
+					case 3:
+						Main.dia = Integer.valueOf(line);
+						break;
+					case 4:
+						Main.autoTapSpeed = Double.valueOf(line);
+						break;
+					case 5:
+						Main.tapMoney = Integer.valueOf(line);
+						break;
+					case 6:
+						Main.tapDia = Integer.valueOf(line);
+						break;
+					case 7:
+						Main.autoMoney = Integer.valueOf(line);
+						break;
+					case 8:
+						Main.tapMoneyLv = Integer.valueOf(line);
+						break;
+					case 9:
+						Main.tapDiaLv = Integer.valueOf(line);
+						break;
+					case 10:
+						Main.autoMoneyLv = Integer.valueOf(line);
+						break;
+					}
+					b++;
+				}
+				br.close();
+				
+				Main.tap = new JLabel("tap : " + Change.change(Main.damage));
+				Main.moneyL = new JLabel("◇  : " + Change.change(Main.money));
+				Main.diaL = new JLabel("★  : " + Main.dia);
+				Main.auto = new JLabel("AUTO : " + Main.autoTapSpeed);
+			}
+			catch(IOException e1) {
+				e1.printStackTrace();
+			}
+		});
+	}
+}

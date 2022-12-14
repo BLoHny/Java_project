@@ -1,0 +1,71 @@
+package GSM_TapTapTap;
+
+public class Change {
+
+	public static String change() {
+		double money = Main.money;
+		int cnt = 0;
+		
+		if (money > 2147483647) {
+			double mm =  money / 10000;
+			int m = (int) mm;
+			
+			while(m / 10000 > 0) {
+				m /= 10000;
+				cnt++;
+			}
+			
+			switch(cnt) {
+			case 0:
+				return (m + "만");
+			case 1:
+				return (m + "억 " + (int)(Main.money % 100000000) / 10000 + "만");
+			case 2:
+				return (m + "조 " + (int)(mm % 100000000) / 100000000 + "억");
+			default:
+				return "살려줘유";
+			}
+		}
+		
+		int moneyInt = (int) money;
+		
+		while(moneyInt / 10000 > 0) {
+			moneyInt /= 10000;
+			cnt++;
+		}
+		
+		switch(cnt) {
+		case 0: 
+			return (moneyInt + "");
+		case 1:
+			return (moneyInt + "만 " + (int)(Main.money % 10000));
+		case 2:
+			return (moneyInt + "억 " + (int)(Main.money % 100000000) / 10000 + "만");
+		case 3:
+			return (moneyInt + "조 " + (int)(Main.money % 1000000000000.0) / 100000000 + "억");
+		}
+		return "error";
+	}
+	
+	public static String hpChange() {
+		int hp = (int) Main.money;
+		int cnt = 0;
+		
+		while(hp / 10000 > 0) {
+			hp /= 10000;
+			cnt++;
+		}
+		
+		switch(cnt) {
+		case 0: 
+			return (hp + "");
+		case 1:
+			return (hp + "만 " + (int)(Main.money % 10000));
+		case 2:
+			return (hp + "억 " + (int)(Main.money % 100000000) / 10000 + "만");
+		case 3:
+			return (hp + "조 " + (int)(Main.money % 1000000000000.0) / 100000000 + "억");
+		}
+		return "error";
+	}
+}

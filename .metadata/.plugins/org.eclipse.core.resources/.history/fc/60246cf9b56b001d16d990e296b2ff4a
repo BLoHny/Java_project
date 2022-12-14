@@ -1,0 +1,43 @@
+package GSM_TapTapTap;
+
+public class JobEvent {
+	public void jobEventer() {
+		Main.buildingButton[1].addActionListener(event->{
+			for (int i = 0; i < 4; i++) {
+				Main.buildingButton[i].setVisible(false);
+			}
+			
+			Main.job.setVisible(true);
+			Main.job1.setVisible(true);
+			Main.job2.setVisible(true);
+			Main.jobExit.setVisible(true);
+		});
+		
+		Main.jobExit.addActionListener(event->{
+			Main.job.setVisible(false);
+			Main.job1.setVisible(false);
+			Main.job2.setVisible(false);
+			Main.jobExit.setVisible(false);
+			
+			for (int i = 0; i < 4; i++) {
+				Main.buildingButton[i].setVisible(true);
+			}
+		});
+		
+		Main.job1.addActionListener(event->{
+			if (Main.autoTapSpeed <= 0.5 && Main.money >= 1000000 && Main.dia >= 30) {
+				Main.job1Check = true;
+				Main.money -= 1000000;
+				Main.dia -= 30; 
+			}
+		});
+		
+		Main.job1.addActionListener(event->{
+			if (Main.autoTapSpeed <= 0.3 && Main.money >= 15000000 && Main.dia >= 100) {
+				Main.job1Check = true;
+				Main.money -= 1000000;
+				Main.dia -= 30; 
+			}
+		});
+	}
+}
